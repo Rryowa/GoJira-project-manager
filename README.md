@@ -1,4 +1,5 @@
 RESTful JIRA API in Golang without Web frameworks.
+
 Scheme
 ![image](https://github.com/Rryowa/GoJira-project-manager/assets/80339180/67918f71-8604-41ec-95c6-0fffad8d41d7)
 Dependencies
