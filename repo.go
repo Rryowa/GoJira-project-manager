@@ -2,7 +2,8 @@ package main
 
 import "database/sql"
 
-// interface that we can inject into services
+// interface to communicate with db
+// and we can inject into services
 type Repo interface {
 	CreateUser() error
 }

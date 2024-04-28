@@ -2,18 +2,22 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
-	"github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
-type MySQLRepository struct {
+type SQLRepository struct {
 	db *sql.DB
 }
 
-// NewMySQLRepository - initialize db and make the connection
-func NewMySQLRepository(cfg mysql.Config) *MySQLRepository {
-	newDb, err := sql.Open("mysql", cfg.FormatDSN())
+// make connection
+func NewSQLRepository(cfg *Config) *SQLRepository {
+	connStr := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable",
+		cfg.User, cfg.Password, cfg.Name, cfg.Host, cfg.Port)
+
+	newDb, err := sql.Open("postgres", connStr)
 
 	// if db is down app is down also
 	if err != nil {
@@ -24,12 +28,12 @@ func NewMySQLRepository(cfg mysql.Config) *MySQLRepository {
 		log.Fatal(err)
 	}
 
-	log.Println("Connected to MySQL")
-	return &MySQLRepository{db: newDb}
+	log.Println("Connected to databases")
+	return &SQLRepository{db: newDb}
 }
 
 // Init() to initialize tables in db
-func (r *MySQLRepository) Init() (*sql.DB, error) {
+func (r *SQLRepository) Init() (*sql.DB, error) {
 	//TODO: init tables
 
 	return r.db, nil

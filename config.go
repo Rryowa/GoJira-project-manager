@@ -1,39 +1,33 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
-//hold env variables at the runtime from injection
-
 type Config struct {
-	Port       string
-	DBUser     string
-	DBPassword string
-	DBAddress  string
-	DBName     string
-	JWTSecret  string
+	Port      string `env:"DB_PORT" env-default:"5432"`
+	Host      string `env:"DB_HOST" env-default:"localhost"`
+	Name      string `env:"DB_NAME" env-default:"demo"`
+	User      string `env:"DB_USER" env-default:"postgres"`
+	Password  string `env:"DB_PASSWORD" env-default:"postgres"`
+	JWTSecret string `env:"DB_JWT_SECRET" env-default:"random"`
 }
 
-var Envs = initConfig()
-
-func initConfig() Config {
-	return Config{
-		Port:       getEnv("PORT", "8080"),
-		DBUser:     getEnv("DB_USER", "root"),
-		DBPassword: getEnv("DB_PASSWORD", "password"),
-		DBAddress: fmt.Sprintf("%s:%s", getEnv("DB_HOST", "127.0.0.1"),
-			getEnv("DB_PORT", "3306")),
-		DBName:    getEnv("DB_NAME", "ProjectManager"),
-		JWTSecret: getEnv("JWT_SECRET", "randomjwtsecretkey"),
+func InitConfig() *Config {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("err loading: %v", err)
 	}
-}
 
-// Func taht gets var from env
-func getEnv(key, fallback string) string {
-	if val, ok := os.LookupEnv(key); ok {
-		return val
+	return &Config{
+		Port:      os.Getenv("DB_PORT"),
+		Host:      os.Getenv("DB_HOST"),
+		Name:      os.Getenv("DB_NAME"),
+		User:      os.Getenv("DB_USER"),
+		Password:  os.Getenv("DB_PASSWORD"),
+		JWTSecret: os.Getenv("DB_JWT_SECRET"),
 	}
-	return fallback
 }
