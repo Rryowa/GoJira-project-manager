@@ -10,7 +10,7 @@ import (
 //start server and anything related
 
 type APIServer struct {
-	//port 3000
+	//localhost:3000
 	addr string
 	//db(repository) dependency injection
 	repo Repo
@@ -21,15 +21,14 @@ func NewAPIServer(addr string, newRepo Repo) *APIServer {
 	return &APIServer{addr: addr, repo: newRepo}
 }
 
-// Serve() initializes a router, register all services(User, Projects, Tasks)
-// Listen
+// Initializes a router, register all services(User, Projects, Tasks)
 func (s *APIServer) Serve() {
 	router := mux.NewRouter()
-	sub := router.PathPrefix("api/v1").Subrouter()
+	sub := router.PathPrefix("/api/v1").Subrouter()
 
 	//TODO: register services
 	tasksService := NewTasksService(s.repo)
-	tasksService.RegisterRoutes(router)
+	tasksService.RegisterRoutes(sub)
 
 	log.Println("Starting API server", s.addr)
 	log.Fatal(http.ListenAndServe(s.addr, sub))
