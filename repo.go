@@ -7,6 +7,7 @@ import "database/sql"
 type Repo interface {
 	CreateUser() error
 	CreateTask(task *Task) (*Task, error)
+	GetTask(id string) (*Task, error)
 }
 
 type Repository struct {
@@ -39,4 +40,12 @@ func (r *Repository) CreateTask(t *Task) (*Task, error) {
 
 	t.ID = id
 	return t, nil
+}
+
+func (r *Repository) GetTask(id string) (*Task, error) {
+	var t Task
+	err := r.db.QueryRow("SELECT id, name, status, project_id, "+
+		" assigned_to, createdAt FROM tasks WHERE id = ?", id).
+		Scan(&t.ID, &t.Name, &t.Status, &t.ProjectID, &t.AssignedTo, &t.CreatedAt)
+	return &t, err
 }

@@ -35,10 +35,10 @@ func (ts *TasksService) handleCreateTask(w http.ResponseWriter, r *http.Request)
 		WriteJSON(w, http.StatusInternalServerError, InvalidRequestError)
 		return
 	}
-	//what if types.go -> Name is empty?
 
+	//what if types.go -> Name is empty?
 	if err := validateTask(task); err != nil {
-		WriteJSON(w, http.StatusInternalServerError, err.Error())
+		WriteJSON(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -50,8 +50,22 @@ func (ts *TasksService) handleCreateTask(w http.ResponseWriter, r *http.Request)
 	WriteJSON(w, http.StatusCreated, t)
 }
 
-func (s *TasksService) handleGetTask(w http.ResponseWriter, r *http.Request) {
+func (ts *TasksService) handleGetTask(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
 
+	if id == "" {
+		WriteJSON(w, http.StatusBadRequest, IdRequiredError)
+		return
+	}
+
+	t, err := ts.repo.GetTask(id)
+	if err != nil {
+		WriteJSON(w, http.StatusInternalServerError, TaskRequired)
+		return
+	}
+
+	WriteJSON(w, http.StatusOK, t)
 }
 
 func validateTask(task *Task) error {
