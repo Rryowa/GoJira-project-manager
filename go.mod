@@ -1,4 +1,4 @@
-module github.com/go-jwt-auth
+module github.com/rryowa/go-jwt-auth
 
 go 1.22.1
 

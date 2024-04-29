@@ -1,4 +1,4 @@
-package main
+package test
 
 import (
 	"bytes"
@@ -8,16 +8,18 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
+	"github.com/rryowa/go-jwt-auth/entity"
+	"github.com/rryowa/go-jwt-auth/service"
 )
 
 func TestCreateTask(t *testing.T) {
 	//defining mock
 
 	mr := NewMock()
-	service := NewTasksService(mr)
+	service := service.NewTasksService(mr)
 
 	t.Run("Should return error if name is empty", func(t *testing.T) {
-		payload := &Task{
+		payload := &entity.Task{
 			Name: "",
 		}
 
@@ -33,7 +35,7 @@ func TestCreateTask(t *testing.T) {
 		}
 		rr := httptest.NewRecorder()
 		router := mux.NewRouter()
-		router.HandleFunc("/tasks", service.handleCreateTask)
+		router.HandleFunc("/tasks", service.HandleCreateTask)
 		router.ServeHTTP(rr, req)
 
 		if rr.Code != http.StatusBadRequest {
@@ -44,7 +46,7 @@ func TestCreateTask(t *testing.T) {
 
 func testGetTask(t *testing.T) {
 	mr := NewMock()
-	service := NewTasksService(mr)
+	service := service.NewTasksService(mr)
 
 	t.Run("Should return task", func(t *testing.T) {
 		req, err := http.NewRequest(http.MethodGet, "/tasks/1", nil)
@@ -54,7 +56,7 @@ func testGetTask(t *testing.T) {
 		}
 		rr := httptest.NewRecorder()
 		router := mux.NewRouter()
-		router.HandleFunc("/tasks/{id}", service.handleGetTask)
+		router.HandleFunc("/tasks/{id}", service.HandleGetTask)
 		router.ServeHTTP(rr, req)
 
 		if rr.Code != http.StatusOK {

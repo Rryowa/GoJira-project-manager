@@ -1,10 +1,12 @@
-package main
+package controller
 
 import (
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rryowa/go-jwt-auth/repo"
+	"github.com/rryowa/go-jwt-auth/service"
 )
 
 //start server and anything related
@@ -13,11 +15,11 @@ type APIServer struct {
 	//localhost:3000
 	addr string
 	//db(repository) dependency injection
-	repo Repo
+	repo repo.Repo
 }
 
 // Constructor
-func NewAPIServer(addr string, newRepo Repo) *APIServer {
+func NewAPIServer(addr string, newRepo repo.Repo) *APIServer {
 	return &APIServer{addr: addr, repo: newRepo}
 }
 
@@ -27,7 +29,7 @@ func (s *APIServer) Serve() {
 	sub := router.PathPrefix("/api/v1").Subrouter()
 
 	//TODO: register services
-	tasksService := NewTasksService(s.repo)
+	tasksService := service.NewTasksService(s.repo)
 	tasksService.RegisterRoutes(sub)
 
 	log.Println("Starting API server", s.addr)

@@ -1,4 +1,4 @@
-package main
+package repo
 
 import (
 	"database/sql"
@@ -6,6 +6,7 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
+	"github.com/rryowa/go-jwt-auth/entity"
 )
 
 type SQLRepository struct {
@@ -13,7 +14,7 @@ type SQLRepository struct {
 }
 
 // make connection
-func NewSQLRepository(cfg *Config) *SQLRepository {
+func NewSQLRepository(cfg *entity.Config) *SQLRepository {
 	connStr := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable", cfg.User, cfg.Password, cfg.Name, cfg.Host, cfg.Port)
 
 	newDb, err := sql.Open("postgres", connStr)
