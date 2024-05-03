@@ -1,6 +1,3 @@
-go run . to run all files
-go test . to run all tests
-
 if you are using WSL on Windows use [::1]
 instead of localhost in the address bar.
 http://[::1]:3000/api/v1/tasks
