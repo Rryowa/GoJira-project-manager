@@ -4,14 +4,14 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
-	"github.com/rryowa/go-jwt-auth/controller"
-	repo "github.com/rryowa/go-jwt-auth/repo"
-	postgres "github.com/rryowa/go-jwt-auth/repo/postgres"
-	"github.com/rryowa/go-jwt-auth/util"
+	"github.com/rryowa/Gojira-project-manager/controllers"
+	"github.com/rryowa/Gojira-project-manager/repo"
+	postgres "github.com/rryowa/Gojira-project-manager/repo/postgres"
+	"github.com/rryowa/Gojira-project-manager/utils"
 )
 
 func main() {
-	cfg := util.NewConfig()
+	cfg := utils.NewConfig()
 	sqlRepository := postgres.NewSQLRepository(cfg)
 	//extract db
 	db, err := sqlRepository.Init()
@@ -20,6 +20,6 @@ func main() {
 	}
 	repo := repo.NewRepository(db)
 
-	api := controller.NewAPIServer(":3000", repo)
+	api := controllers.NewAPIServer(":3000", repo)
 	api.Serve()
 }

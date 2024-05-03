@@ -3,7 +3,8 @@ package repo
 import (
 	"database/sql"
 
-	"github.com/rryowa/go-jwt-auth/entity"
+	_ "github.com/lib/pq"
+	"github.com/rryowa/Gojira-project-manager/entity"
 )
 
 /*
@@ -15,7 +16,8 @@ layer.
 // interface to communicate with db
 // and we can inject into services
 type Repo interface {
-	CreateUser() error
+	CreateUser(u *entity.User) (*entity.User, error)
+	GetUserByID(id string) (*entity.User, error)
 	CreateTask(task *entity.Task) (*entity.Task, error)
 	GetTask(id string) (*entity.Task, error)
 }
@@ -31,19 +33,11 @@ func NewRepository(db *sql.DB) *Repository {
 	}
 }
 
-func (r *Repository) CreateUser() error {
-	return nil
-}
-
 func (r *Repository) CreateTask(t *entity.Task) (*entity.Task, error) {
-	rows, err := r.db.Exec("INSERT INTO tasks (name, status, project_id, assigned_to)"+
-		" VALUES (?, ?, ?, ?)", t.Name, t.Status, t.ProjectID, t.AssignedTo)
-
-	if err != nil {
-		return nil, err
-	}
-
-	id, err := rows.LastInsertId()
+	var id int64
+	err := r.db.QueryRow("INSERT INTO tasks (name, status, project_id, assigned_to)"+
+		" VALUES ($1, $2, $3, $4) RETURNING id",
+		t.Name, t.Status, t.ProjectID, t.AssignedTo).Scan(&id)
 	if err != nil {
 		return nil, err
 	}
@@ -52,10 +46,33 @@ func (r *Repository) CreateTask(t *entity.Task) (*entity.Task, error) {
 	return t, nil
 }
 
+//TODO: err here
+
+func (r *Repository) CreateUser(u *entity.User) (*entity.User, error) {
+	var id int64
+	err := r.db.QueryRow("INSERT INTO users (email, firstName, lastName, password)"+
+		" VALUES ($1, $2, $3, $4) RETURNING id",
+		u.Email, u.FirstName, u.LastName, u.Password).Scan(&id)
+	if err != nil {
+		return nil, err
+	}
+
+	u.ID = id
+	return u, nil
+}
+
 func (r *Repository) GetTask(id string) (*entity.Task, error) {
 	var t entity.Task
 	err := r.db.QueryRow("SELECT id, name, status, project_id, "+
-		" assigned_to, createdAt FROM tasks WHERE id = ?", id).
+		" assigned_to, createdAt FROM tasks WHERE id = $1", id).
 		Scan(&t.ID, &t.Name, &t.Status, &t.ProjectID, &t.AssignedTo, &t.CreatedAt)
 	return &t, err
+}
+
+func (r *Repository) GetUserByID(id string) (*entity.User, error) {
+	var u entity.User
+	err := r.db.QueryRow("SELECT id, email, firstName, "+
+		"lastName, createdAt FROM users WHERE id = $1", id).
+		Scan(&u.ID, &u.Email, &u.FirstName, &u.LastName, &u.CreatedAt)
+	return &u, err
 }

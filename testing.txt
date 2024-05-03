@@ -1,2 +1,0 @@
-go run . to run all files
-go test . to run all tests

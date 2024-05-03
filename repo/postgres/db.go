@@ -6,7 +6,7 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
-	"github.com/rryowa/go-jwt-auth/entity"
+	"github.com/rryowa/Gojira-project-manager/entity"
 )
 
 type SQLRepository struct {
@@ -37,10 +37,10 @@ func (r *SQLRepository) Init() (*sql.DB, error) {
 	if err := r.createUsersTable(); err != nil {
 		return nil, err
 	}
-	if err := r.createTasksTable(); err != nil {
+	if err := r.createProjectsTable(); err != nil {
 		return nil, err
 	}
-	if err := r.createProjectsTable(); err != nil {
+	if err := r.createTasksTable(); err != nil {
 		return nil, err
 	}
 	return r.db, nil
@@ -80,10 +80,7 @@ func (r *SQLRepository) createTasksTable() error {
 			FOREIGN KEY(projectId) REFERENCES projects(id)
 		);
 	`)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func (r *SQLRepository) createProjectsTable() error {

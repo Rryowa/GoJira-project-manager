@@ -1,6 +1,6 @@
-RESTful Jira JWT API in Golang
-No Web frameworks
-Layered architecture implementation
+## **RESTful** Jira **JWT** API in **Golang**<br>
+**No Web frameworks**<br>
+**Layered** architecture implementation<br>
 
 Scheme
 ![image](https://github.com/Rryowa/GoJira-project-manager/assets/80339180/67918f71-8604-41ec-95c6-0fffad8d41d7)
