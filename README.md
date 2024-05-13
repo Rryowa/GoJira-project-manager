@@ -1,7 +1,7 @@
 ## **RESTful** Jira **JWT** API in **Golang**<br>
 **No Web frameworks**<br>
-**Layered** architecture implementation<br>
-<br><br>
+**Layered** architecture implementation<br
+<br>
 ```***docker compose up -d***```<br>
 ```***make run***```<br>
 **Thunder Client:**<br>
