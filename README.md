@@ -2,8 +2,8 @@
 **No Web frameworks**<br>
 **Layered** architecture implementation<br
 <br>
-```***docker compose up -d***```<br>
-```***make run***```<br>
+```docker compose up -d```<br>
+```make run```<br>
 **Thunder Client:**<br>
 POST ```http://[::1]:3000/api/v1/users/register```<br>
 with json body email, password<br>
