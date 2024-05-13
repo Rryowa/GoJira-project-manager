@@ -21,9 +21,9 @@ func NewConfig() *entity.Config {
 	return &entity.Config{
 		Port:      os.Getenv("DB_PORT"),
 		Host:      os.Getenv("DB_HOST"),
-		Name:      os.Getenv("DB_NAME"),
-		User:      os.Getenv("DB_USER"),
-		Password:  os.Getenv("DB_PASSWORD"),
+		Name:      os.Getenv("POSTGRES_DB"),
+		User:      os.Getenv("POSTGRES_USER"),
+		Password:  os.Getenv("POSTGRES_PASSWORD"),
 		JWTSecret: os.Getenv("DB_JWT_SECRET"),
 	}
 }

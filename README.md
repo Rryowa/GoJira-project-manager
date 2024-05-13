@@ -2,11 +2,13 @@
 **No Web frameworks**<br>
 **Layered** architecture implementation<br>
 <br><br>
+```***docker compose up -d***```<br>
+```***make run***```<br>
 **Thunder Client:**<br>
-POST http://[::1]:3000/api/v1/users/register<br>
+POST ```http://[::1]:3000/api/v1/users/register```<br>
 with json body email, password<br>
 COPY token from response(or cookies)<br>
-POST http://[::1]:3000/api/v1/tasks<br>
+POST ```http://[::1]:3000/api/v1/tasks```<br>
 with copied token in Authorization header<br>
 
 Scheme
