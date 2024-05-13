@@ -2,8 +2,7 @@
 **No Web frameworks**<br>
 **Layered** architecture implementation<br>
 <br>
-*Edit .env file with your db credentials*<br>
-<br>
+
 **Thunder Client:**<br>
 POST http://[::1]:3000/api/v1/users/register<br>
 with json body email, password<br>
