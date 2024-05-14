@@ -24,7 +24,7 @@ with json body email, password
   "Password":"1234567890"
 }
 ```
-copy token from response(or cookies)
+copy token from response(or cookies)<br>
 POST
 ```sh
 http://[::1]:3000/api/v1/tasks
