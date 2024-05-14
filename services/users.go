@@ -2,6 +2,7 @@ package services
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -56,7 +57,8 @@ func (us *UserService) HandleUserRegister(w http.ResponseWriter, r *http.Request
 	u, err := us.repo.CreateUser(payload)
 	if err != nil {
 		utils.WriteJSON(w, http.StatusInternalServerError,
-			utils.ErrorResponse{Error: "Error creating user"})
+			utils.ErrorResponse{Error: "User with this email already exists"})
+		fmt.Println(err)
 		return
 	}
 

@@ -46,8 +46,6 @@ func (r *Repository) CreateTask(t *entity.Task) (*entity.Task, error) {
 	return t, nil
 }
 
-//TODO: err here
-
 func (r *Repository) CreateUser(u *entity.User) (*entity.User, error) {
 	var id int64
 	err := r.db.QueryRow("INSERT INTO users (email, firstName, lastName, password)"+

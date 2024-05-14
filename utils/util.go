@@ -13,7 +13,7 @@ import (
 var Envs = NewConfig()
 
 func NewConfig() *entity.Config {
-	err := godotenv.Load("utils/.env")
+	err := godotenv.Load("app/utils/.env")
 	if err != nil {
 		log.Fatalf("err loading: %v", err)
 	}
