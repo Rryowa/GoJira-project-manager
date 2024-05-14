@@ -12,24 +12,24 @@ docker-compose build
 ```sh
 docker-compose up
 ```
-<br>**Thunder Client:**<br>
+**Thunder Client:**<br>
 POST
 ```sh
 http://[::1]:3000/api/v1/users/register
 ```
-<br>with json body email, password<br>
+with json body email, password
 ```json
 {
   "email":"baaaa1bbbbb@gmail.com",
   "Password":"1234567890"
 }
 ```
-COPY token from response(or cookies)<br>
+copy token from response(or cookies)
 POST
 ```sh
 http://[::1]:3000/api/v1/tasks
 ```
-<br>with copied token in Authorization header ^_^<br>
+with copied token in Authorization header ^_^<br><br>
 
 Scheme
 ![image](https://github.com/Rryowa/GoJira-project-manager/assets/80339180/67918f71-8604-41ec-95c6-0fffad8d41d7)
