@@ -6,11 +6,13 @@
 >Observe the DB_HOST. This is gotten from the name of the service in the docker-compose.yml file. HUH.
 
 ***RUN***<br>
-##
-<tab><tab>docker-compose build<br>
-##
-<tab><tab>docker-compose up<br><br>
-**Thunder Client:**<br>
+```sh
+docker-compose build
+```
+```sh
+docker-compose up
+```
+<br>**Thunder Client:**<br>
 POST<br>
 ##
 <tab><tab>http://[::1]:3000/api/v1/users/register<br>
