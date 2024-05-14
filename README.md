@@ -4,6 +4,7 @@
 >We built an optimised Golang image using Multi-stage builds. This is because using **golang:latest** creates an image that consumes a lot of memory and hence not production friendly. So we used **golang:alpine** which is very light. A whopping **17.9MB** image. Impressive!
 >Another thing worth noting is the **.env** file. You can see how we added it to the **Dockerfile**. This is essential for our environmental variables.
 >Observe the DB_HOST. This is gotten from the name of the service in the docker-compose.yml file. HUH.
+
 ***RUN***<br>
 ##
 <tab><tab>docker-compose build<br>
