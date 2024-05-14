@@ -53,7 +53,6 @@ func (us *UserService) HandleUserRegister(w http.ResponseWriter, r *http.Request
 	}
 	payload.Password = hashedPassword
 
-	//us содержит все поля, обсер происходит в insert
 	u, err := us.repo.CreateUser(payload)
 	if err != nil {
 		utils.WriteJSON(w, http.StatusInternalServerError,
